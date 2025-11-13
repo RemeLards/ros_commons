@@ -147,6 +147,66 @@
     </gazebo>
   </xacro:macro>
 
+  <!-- See : https://github.com/ros-simulation/gazebo_ros_pkgs/wiki/ROS-2-Migration:-Skid-Steer-drive -->
+  <xacro:macro
+    name="skid_steer_controller"
+    params="
+      name
+      left_rear_joint
+      right_rear_joint
+      left_front_joint
+      right_front_joint
+      wheel_diameter
+      wheel_separation
+      publish_odom:=false
+    "
+  >
+    <gazebo>
+      <plugin name="${name}_joint_states" filename="libgazebo_ros_joint_state_publisher.so">
+        <joint_name>${left_rear_joint}</joint_name>
+        <joint_name>${right_rear_joint}</joint_name>
+        <joint_name>${left_front_joint}</joint_name>
+        <joint_name>${right_front_joint}</joint_name>
+      </plugin>
+      <plugin name='skid_steer_drive' filename='libgazebo_ros_diff_drive.so'>
+
+        <!-- Update rate -->
+        <update_rate>50</update_rate>
+
+        <!-- Number of wheel pairs -->
+        <num_wheel_pairs>2</num_wheel_pairs>
+
+        <!-- wheels0 -->
+        <left_joint>${left_rear_joint}</left_joint>
+        <right_joint>${right_rear_joint}</right_joint>
+
+        <!-- wheels1-->
+        <left_joint>${left_front_joint}</left_joint>
+        <right_joint>${right_front_joint}</right_joint>
+
+        <!-- kinematics -->
+        <wheel_separation>${wheel_separation}</wheel_separation>
+        <wheel_separation>${wheel_separation}</wheel_separation>
+
+        <wheel_diameter>${wheel_diameter}</wheel_diameter>
+        <wheel_diameter>${wheel_diameter}</wheel_diameter>
+
+        <!-- limits -->
+        <max_wheel_torque>20</max_wheel_torque>
+        <max_wheel_acceleration>1.0</max_wheel_acceleration>
+
+        <!-- output -->
+        <publish_odom>${publish_odom}</publish_odom>
+        <publish_odom_tf>${publish_odom}</publish_odom_tf>
+        <publish_wheel_tf>${publish_odom}</publish_wheel_tf>
+
+        <odometry_frame>odom</odometry_frame>
+        <robot_base_frame>base_link</robot_base_frame>
+
+      </plugin>
+    </gazebo>
+  </xacro:macro>
+
   <!-- See: http://sdformat.org/tutorials?tut=sdformat_urdf_extensions&cat=specification -->
   <xacro:macro
     name="remove_friction"

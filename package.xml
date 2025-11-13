@@ -5,7 +5,7 @@
   <name>ros_commons</name>
   <version>1.3.0</version>
   <description>Common ROS utilities.</description>
-  <maintainer email="rafael.fracalossi.freitas@gmail.com">Helio Perroni Filho</maintainer>
+  <maintainer email="rafael.fracalossi.freitas@gmail.com">Rafael Fracalossi Freitas</maintainer>
   <license>Apache-2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
